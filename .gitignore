@@ -1,0 +1,42 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+__pycache__
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.venv/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Operating System
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Generated Data
+# =========================
+data/embeddings.json
+
+evaluation/run_results.json
+evaluation/eval_results.json
+evaluation/eval_log.txt
+
+# =========================
+# Experimental Files
+# =========================
+testing/
