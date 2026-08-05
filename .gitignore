@@ -30,12 +30,17 @@ Thumbs.db
 # =========================
 # Generated Data
 # =========================
-data/embeddings.json
+phase_2/data/embeddings.json
 
-evaluation/run_results.json
-evaluation/eval_results.json
-evaluation/eval_log.txt
+phase_2/evaluation/run_results.json
+phase_2/evaluation/eval_results.json
+phase_2/evaluation/eval_log.txt
+phase_3/vector_store/
+phase_4/vector_store/
 
+*.faiss
+*.pkl
+*.index
 # =========================
 # Experimental Files
 # =========================

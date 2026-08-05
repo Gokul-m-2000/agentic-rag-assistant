@@ -71,6 +71,7 @@ def route_question(que):
                 top_ch=retreive_top_chunks(question)
                 if top_ch:
                     ai_answer=ai_assistant(top_ch,question)
+                    print(top_ch)
                     if ai_answer is not None:
                         rag_answer_dict={"rag_answer":ai_answer}
                         main_answer.append(rag_answer_dict)

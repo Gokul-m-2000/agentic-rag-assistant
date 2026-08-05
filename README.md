@@ -1,101 +1,227 @@
-# AI Assistant with RAG, Tool Routing & LLM Evaluation
+# AI Engineering Learning Journey
 
-A progressive AI engineering project built from first principles, following Marina Wyss's **"layered complexity"** philosophy. Every core component was implemented manually before introducing higher-level frameworks such as LangChain.
+This repository documents my progression in AI engineering by building increasingly capable AI applications while learning the underlying concepts before introducing higher-level frameworks.
 
-## Overview
+Instead of starting directly with libraries such as LangChain or FastAPI, I first implemented the core ideas manually and then gradually migrated to modern tooling. Each phase is preserved to show the evolution from simple API usage to a modular backend application.
 
-This project demonstrates the implementation of an end-to-end **Retrieval-Augmented Generation (RAG)** pipeline together with a simple AI agent capable of routing user queries to multiple tools.
-
-### Features
-
-- Manual text chunking with configurable overlap
-- Embedding generation using the Gemini Embedding API (raw HTTP requests)
-- Cosine similarity retrieval implemented from scratch using NumPy
-- Context-grounded answer generation using retrieved chunks
-- Agentic tool routing (RAG, Calculator, Wikipedia)
-- LLM-as-a-Judge evaluation pipeline using a gold-standard test set
-- Modular project structure designed for maintainability and future expansion
+> **Note**
+>
+> This repository intentionally preserves every implementation phase instead of replacing previous versions. The goal is to document the learning progression and compare manual implementations with framework-based solutions.
 
 ---
 
-## Project Structure
+# Repository Structure
 
 ```text
-AI_ASSIST/
-│
-├── data/
-│   └── doc.txt
-│
-├── evaluation/
-│   ├── build_run_results.py
-│   ├── evaluator.py
-│   └── gold_test.json
-│
-├── build_index.py
-├── chunker.py
-├── config.py
-├── embedder.py
-├── generator.py
-├── retriever.py
-├── router.py
-├── tools.py
-├── main.py
+.
+
+├── phase_1/
+├── phase_2/
+├── phase_3/
+├── phase_4/
 │
 ├── requirements.txt
-├── .gitignore
 ├── README.md
+├── .gitignore
 └── .env (not committed)
 ```
 
 ---
 
-## Generated Files
+# Learning Progression
 
-The following files are generated automatically during execution and are **not committed** to the repository:
+## Phase 1 — Gemini API Fundamentals
 
-- `data/embeddings.json`
-- `evaluation/run_results.json`
-- `evaluation/eval_results.json`
-- `evaluation/eval_log.txt`
+A small introductory project created while learning how to interact with Google's Gemini API.
+
+### Topics Covered
+
+- Gemini API integration
+- Prompt construction
+- Sentiment analysis example
+- Raw HTTP requests using Python
 
 ---
 
-## How to Run
+## Phase 2 — Manual Retrieval-Augmented Generation (RAG)
 
-### 1. Clone the repository
+Implemented the core components of a Retrieval-Augmented Generation (RAG) system without using orchestration frameworks.
+
+### Features
+
+- Manual text chunking with configurable overlap
+- Embedding generation using the Gemini Embedding API (raw HTTP requests)
+- Embedding storage using JSON
+- Manual cosine similarity retrieval using NumPy
+- Context-grounded answer generation
+- Manual tool routing
+    - RAG
+    - Calculator
+    - Wikipedia
+- LLM-as-a-Judge evaluation pipeline
+- Incremental evaluation logging
+- Retry with Gemini retryDelay
+
+This phase focuses on understanding how retrieval systems work internally before introducing higher-level abstractions.
+
+---
+
+## Phase 3 — LangChain Migration
+
+Migrated the manual RAG implementation to LangChain while preserving the same retrieval workflow.
+
+### Features
+
+- GoogleGenerativeAIEmbeddings
+- FAISS Vector Store
+- ChatPromptTemplate
+- Stuff Documents Chain
+- Retrieval Chain
+- Persistent vector database
+- Modular project structure
+
+The objective of this phase was to understand what LangChain abstracts compared to a manual implementation.
+
+---
+
+## Phase 4 — FastAPI Backend
+
+Wrapped the LangChain-based RAG system inside a REST API.
+
+### Features
+
+- FastAPI
+- REST API endpoints
+- Request validation using Pydantic
+- Response models
+- Health endpoint
+- Rebuild-index endpoint
+- Automatic Swagger documentation
+- Separation of API layer and RAG logic
+
+This phase focuses on exposing the RAG pipeline as a backend service.
+
+---
+
+# Technologies Used
+
+- Python
+- Google Gemini API
+- NumPy
+- Requests
+- LangChain
+- FAISS
+- FastAPI
+- Pydantic
+- Wikipedia API
+- python-dotenv
+
+---
+
+# Running the Repository
+
+## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd AI_ASSIST
+git clone https://github.com/Gokul-m-2000/agentic-rag-assistant.git
+
+cd agentic-rag-assistant
 ```
 
-### 2. Install dependencies
+---
+
+## 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Create a `.env` file
+---
+
+## 3. Create a `.env` File
 
 ```text
 GEMINI_API_KEY=your_api_key_here
 ```
 
-### 4. Build the embedding index (one-time)
+---
+
+# Running Phase 1
+
+Navigate to the Phase 1 directory.
+
+```bash
+cd phase_1
+python main.py
+```
+
+---
+
+# Running Phase 2
+
+Navigate to the Phase 2 directory.
+
+```bash
+cd phase_2
+```
+
+Build the embedding index (one-time).
 
 ```bash
 python build_index.py
 ```
 
-This generates:
+This generates
 
 ```text
 data/embeddings.json
 ```
 
+Run the assistant.
+
+```bash
+python main.py
+```
+
+### Evaluation
+
+Generate answers
+
+```bash
+python evaluation/build_run_results.py
+```
+
+Run the evaluator
+
+```bash
+python evaluation/evaluator.py
+```
+
+Generated files
+
+```text
+evaluation/run_results.json
+evaluation/eval_results.json
+evaluation/eval_log.txt
+```
+
 ---
 
-### 5. Run the assistant
+# Running Phase 3
+
+Navigate to the Phase 3 directory.
+
+```bash
+cd phase_3
+```
+
+Build the vector store.
+
+```bash
+python build_index.py
+```
+
+Run the assistant.
 
 ```bash
 python main.py
@@ -103,64 +229,101 @@ python main.py
 
 ---
 
-### 6. Generate evaluation answers
+# Running Phase 4
+
+Navigate to the Phase 4 directory.
 
 ```bash
-python evaluation/build_run_results.py
+cd phase_4
 ```
 
-This generates:
-
-```text
-evaluation/run_results.json
-```
-
----
-
-### 7. Run the evaluation pipeline
+Build the vector store.
 
 ```bash
-python evaluation/evaluator.py
+python build_index.py
 ```
 
-This generates:
+Start the FastAPI server.
+
+```bash
+uvicorn main:app --reload
+```
+
+FastAPI automatically generates interactive API documentation.
+
+Open
 
 ```text
-evaluation/eval_results.json
-evaluation/eval_log.txt
+http://127.0.0.1:8000/docs
 ```
 
 ---
 
-## Engineering Decisions
+# Generated Files
 
-- **Raw HTTP Requests** — Used the `requests` library directly to understand the complete Gemini API contract before using official SDKs.
-- **Manual Text Chunking** — Implemented configurable chunking with overlap to understand how document splitting affects retrieval quality.
-- **Manual Embedding Pipeline** — Built the indexing workflow from scratch without vector database libraries.
-- **Manual Cosine Similarity** — Implemented similarity search using NumPy to understand the underlying mathematics instead of relying on external libraries.
-- **Agentic Tool Routing** — Implemented an LLM-based router capable of selecting and executing multiple tools based on user intent.
-- **LLM-as-a-Judge Evaluation** — Built an automated evaluation pipeline using a separate judge prompt for factual correctness and out-of-scope refusal detection.
-- **Checkpoint Saving** — Evaluation progress is saved incrementally, allowing interrupted runs to resume without recomputing completed questions.
-- **Retry with Backoff** — Implements dynamic retry logic by reading Gemini's `retryDelay` value instead of relying on fixed retry intervals.
+The following files are generated during execution and are intentionally excluded from version control.
 
----
+### Phase 2
 
-## Tech Stack
+- data/embeddings.json
+- evaluation/run_results.json
+- evaluation/eval_results.json
+- evaluation/eval_log.txt
 
-- Python
-- Gemini API
-- NumPy
-- Requests
-- Wikipedia API
-- python-dotenv
+### Phase 3
+
+- vector_store/
+
+### Phase 4
+
+- vector_store/
 
 ---
 
-## Future Improvements
+# Engineering Decisions
 
-- Replace JSON embedding storage with a vector database (FAISS or ChromaDB)
-- Integrate LangChain for orchestration
-- Add conversational memory
-- Improve external knowledge retrieval
-- Build a FastAPI backend
-- Deploy as an API service
+Some implementation choices were made intentionally for learning purposes.
+
+- Used raw HTTP requests before official SDKs to understand the Gemini API contract.
+- Implemented manual document chunking before using LangChain abstractions.
+- Implemented cosine similarity manually before introducing FAISS.
+- Built a complete manual RAG pipeline before migrating to LangChain.
+- Preserved every learning phase instead of replacing earlier implementations.
+- Introduced FastAPI only after understanding the retrieval pipeline.
+
+---
+
+# Current Status
+
+Completed
+
+- Gemini API integration
+- Manual RAG implementation
+- Tool routing
+- Evaluation pipeline
+- LangChain migration
+- FastAPI backend
+
+Currently Exploring
+
+- Logging
+- Better exception handling
+- FastAPI lifespan events
+- Agentic AI concepts
+
+---
+
+# Future Improvements
+
+- Structured LLM outputs
+- Improved logging
+- Better API error handling
+- Additional retrieval strategies
+- Agentic workflows
+- Docker deployment
+
+---
+
+# Acknowledgements
+
+The learning approach followed throughout this repository emphasizes understanding the underlying concepts before relying on higher-level frameworks.
