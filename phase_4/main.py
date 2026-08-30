@@ -2,8 +2,16 @@ from rag import initialize_rag,rag
 from schemas import Question,Answer,RebuildIndexResponse,HealthResponse
 from fastapi import FastAPI,HTTPException
 from build_index import build_index
+from config import VECTOR_STORE_PATH
 app=FastAPI()
-retrieval_chain=initialize_rag()
+
+
+
+if not VECTOR_STORE_PATH.exists():
+    print("Vector store not found. Building index...")
+    build_index()
+
+retrieval_chain = initialize_rag()
 
 @app.get("/")
 def home():
