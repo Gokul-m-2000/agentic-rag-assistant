@@ -90,14 +90,20 @@ Wrapped the LangChain-based RAG system inside a REST API.
 
 ### Features
 
-- FastAPI
-- REST API endpoints
+- FastAPI REST API
 - Request validation using Pydantic
 - Response models
+- Application lifespan management
+- Startup initialization of the RAG pipeline
 - Health endpoint
 - Rebuild-index endpoint
-- Automatic Swagger documentation
-- Separation of API layer and RAG logic
+- API-key authentication
+- Request ID generation and request-level logging
+- Centralized exception handling
+- Rate limiting using SlowAPI
+- Separation of API, RAG, configuration, and infrastructure concerns
+- Automatic Swagger/OpenAPI documentation
+
 
 This phase focuses on exposing the RAG pipeline as a backend service.
 
@@ -277,7 +283,7 @@ The following files are generated during execution and are intentionally exclude
 ### Phase 4
 
 - vector_store/
-
+- phase_4/logs/
 ---
 
 # Engineering Decisions
@@ -303,23 +309,29 @@ Completed
 - Evaluation pipeline
 - LangChain migration
 - FastAPI backend
+- Application lifespan management
+- Logging and request tracing
+- Centralized exception handling
+- API-key authentication
+- Rate limiting
 
-Currently Exploring
+Currently Building
 
-- Logging
-- Better exception handling
-- FastAPI lifespan events
-- Agentic AI concepts
+- Production-grade PostgreSQL + pgvector RAG architecture
+- Incremental document ingestion
+- Persistent document and conversation storage
 
 ---
 
-# Future Improvements
+Future Improvements
 
-- Structured LLM outputs
-- Improved logging
-- Better API error handling
-- Additional retrieval strategies
-- Agentic workflows
+- Hybrid retrieval
+- Reranking
+- RAG evaluation
+- Persistent conversations
+- LangGraph agent
+- SQL and web tools
+- Redis-backed infrastructure
 - Docker deployment
 
 ---

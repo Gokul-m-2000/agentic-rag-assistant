@@ -38,6 +38,8 @@ phase_2/evaluation/eval_log.txt
 phase_3/vector_store/
 phase_4/vector_store/
 
+phase_4/logs/
+
 *.faiss
 *.pkl
 *.index
@@ -45,3 +47,9 @@ phase_4/vector_store/
 # Experimental Files
 # =========================
 testing/
+
+
+# Phase 4 experimental test files
+phase_4/settings_test.py
+phase_4/tes_logging.py
+phase_4/test_context.py
