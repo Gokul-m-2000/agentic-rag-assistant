@@ -50,6 +50,7 @@ testing/
 
 
 # Phase 4 experimental test files
+testing_phase4/
 phase_4/settings_test.py
 phase_4/tes_logging.py
 phase_4/test_context.py

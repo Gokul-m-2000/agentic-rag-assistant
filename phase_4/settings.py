@@ -7,6 +7,7 @@ BASE_DIR=Path(__file__).resolve().parent
 
 class Settings(BaseSettings):
     google_api_key:str 
+    database_url: str
     embedding_model:str="gemini-embedding-001"
     generation_model:str="gemini-2.5-flash"
     chunk_size:int=3000

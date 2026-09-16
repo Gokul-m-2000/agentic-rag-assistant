@@ -77,16 +77,16 @@ Migrated the manual RAG implementation to LangChain while preserving the same re
 - ChatPromptTemplate
 - Stuff Documents Chain
 - Retrieval Chain
-- Persistent vector database
+- Persistent FAISS vector store
 - Modular project structure
 
 The objective of this phase was to understand what LangChain abstracts compared to a manual implementation.
 
 ---
 
-## Phase 4 — FastAPI Backend
+## Phase 4 — Production-Oriented RAG Backend
 
-Wrapped the LangChain-based RAG system inside a REST API.
+Phase 4 evolves the RAG system from a local application into a modular backend architecture designed for persistent, multi-user document retrieval.
 
 ### Features
 
@@ -101,13 +101,40 @@ Wrapped the LangChain-based RAG system inside a REST API.
 - Request ID generation and request-level logging
 - Centralized exception handling
 - Rate limiting using SlowAPI
-- Separation of API, RAG, configuration, and infrastructure concerns
+- Separation of API, services, database, configuration, and infrastructure concerns
 - Automatic Swagger/OpenAPI documentation
+- PostgreSQL database integration
+- SQLAlchemy ORM
+- Alembic database migrations
+- pgvector for vector storage and similarity search
+- User, document, and document-chunk persistence
+- Shared embedding service
+- Document splitting and embedding pipeline
+- PostgreSQL-backed dense vector retrieval
+- User-isolated retrieval using database-level filtering
+- Cosine-distance similarity search
+- Transaction rollback and ingestion error handling
 
+### Current Architecture
 
-This phase focuses on exposing the RAG pipeline as a backend service.
-
----
+```text
+FastAPI
+    |
+    +-- Authentication / Request Validation
+    |
+    +-- Document & Query Services
+    |
+    +-- PostgreSQL + pgvector
+    |       |
+    |       +-- Users
+    |       +-- Documents
+    |       +-- Document Chunks
+    |       +-- Embeddings
+    |
+    +-- Dense Vector Retrieval
+    |
+    +-- RAG Generation
+```
 
 # Technologies Used
 
@@ -119,6 +146,10 @@ This phase focuses on exposing the RAG pipeline as a backend service.
 - FAISS
 - FastAPI
 - Pydantic
+- PostgreSQL
+- pgvector
+- SQLAlchemy
+- Alembic
 - Wikipedia API
 - python-dotenv
 
@@ -146,11 +177,12 @@ pip install -r requirements.txt
 
 ## 3. Create a `.env` File
 
+Create a `.env` file in the repository root.
+
 ```text
 GEMINI_API_KEY=your_api_key_here
+DATABASE_URL=postgresql+psycopg://username:password@localhost:5432/ai_assistant
 ```
-
----
 
 # Running Phase 1
 
@@ -243,13 +275,15 @@ Navigate to the Phase 4 directory.
 cd phase_4
 ```
 
-Build the vector store.
+Make sure PostgreSQL is running and the `ai_assistant` database has been created.
+
+Apply the database migrations:
 
 ```bash
-python build_index.py
+alembic upgrade head
 ```
 
-Start the FastAPI server.
+Start the FastAPI server:
 
 ```bash
 uvicorn main:app --reload
@@ -257,12 +291,11 @@ uvicorn main:app --reload
 
 FastAPI automatically generates interactive API documentation.
 
-Open
+Open:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
-
 ---
 
 # Generated Files
@@ -282,8 +315,7 @@ The following files are generated during execution and are intentionally exclude
 
 ### Phase 4
 
-- vector_store/
-- phase_4/logs/
+- logs/
 ---
 
 # Engineering Decisions
@@ -301,7 +333,7 @@ Some implementation choices were made intentionally for learning purposes.
 
 # Current Status
 
-Completed
+### Completed
 
 - Gemini API integration
 - Manual RAG implementation
@@ -314,27 +346,43 @@ Completed
 - Centralized exception handling
 - API-key authentication
 - Rate limiting
+- PostgreSQL database foundation
+- SQLAlchemy ORM integration
+- Alembic database migrations
+- pgvector integration
+- User, document, and document-chunk models
+- Document repository layer
+- Shared embedding service
+- Document splitting and embedding pipeline
+- Dense vector retrieval
+- User-isolated retrieval
+- Cosine-distance similarity search
+- Transaction rollback and ingestion error handling
 
-Currently Building
+### Currently Building
 
-- Production-grade PostgreSQL + pgvector RAG architecture
-- Incremental document ingestion
-- Persistent document and conversation storage
-
----
-
-Future Improvements
-
-- Hybrid retrieval
-- Reranking
-- RAG evaluation
+- Integration of PostgreSQL-backed retrieval into the main RAG pipeline
+- Measurable RAG evaluation baseline
+- Persistent document ingestion workflow
 - Persistent conversations
-- LangGraph agent
-- SQL and web tools
-- Redis-backed infrastructure
-- Docker deployment
 
+### Future Improvements
+
+- Hybrid semantic + keyword retrieval
+- Reranking
+- Query rewriting where evaluation justifies it
+- Object storage for original documents
+- Background document processing
+- Redis-backed rate limiting, caching, and job infrastructure
+- LangGraph agentic layer
+- RAG, SQL, and web tool routing
+- Multi-step agent execution
+- Agent state and persistence
+- Agent evaluation and observability
+- Docker deployment
 ---
+
+
 
 # Acknowledgements
 
